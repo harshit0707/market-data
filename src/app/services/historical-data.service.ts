@@ -13,14 +13,17 @@ export class HistoricalDataService {
     // console.log(data);
     const url = this.getURL(data);
     const headers = this.getHeaders();
-    this._http.get(url).subscribe(
+    this._http.get(url, {
+        // headers: headers,
+        // withCredentials: true
+    }).subscribe(
       (resp) => {
-        console.log(resp);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+          console.log(resp);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   getURL(data: HistoricalDataRequestModel): string {
@@ -31,13 +34,18 @@ export class HistoricalDataService {
     return url;
   }
 
-  getHeaders(): HttpHeaders{
+  getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
-    headers.append('sec-fetch-mode', 'navigate');
-    headers.append('Accept', '*');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Methods', '*');
-    headers.append('abc', 'abc');
+    // headers = headers.append('sec-fetch-dest', 'document');
+    // headers = headers.append('sec-fetch-mode', 'navigate');
+    // headers = headers.append('sec-fetch-site', 'none');
+    // headers = headers.append('Accept', '*');
+    // headers = headers.append('Access-Control-Allow-Origin', '*');
+    // headers = headers.append('Access-Control-Allow-Methods', 'HEAD,GET,OPTIONS');
+    // headers = headers.append('Access-Control-Allow-Credentials', 'true');
+    // headers = headers.append('Access-Control-Allow-Origin', '*');
+    // headers = headers.append('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    // headers = headers.append('content-type', 'application/vnd.sun.wadl+xml');
     return headers;
   }
 }
