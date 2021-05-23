@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
-import { HistoricalDataRequestModel } from '../models/historicalDataRequest.model';
+import { HistoricalDataRequestModel } from '../models/HistoricalDataRequest.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HistoricalDataRequestModel } from 'src/app/models/historicalDataRequest.model';
+import { HistoricalDataRequestModel } from 'src/app/models/HistoricalDataRequest.model';
 import { HistoricalDataService } from 'src/app/services/historical-data.service';
 
 @Component({
