@@ -1,29 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HistoricalDataRequestModel } from '../models/HistoricalDataRequest.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoricalDataService {
 
+  proxyURL = 'https://thingproxy.freeboard.io/fetch/';
   constructor(private _http: HttpClient) { }
 
-  getData(data: HistoricalDataRequestModel) {
-    // console.log(data);
+  getData(data: HistoricalDataRequestModel): Observable<any> {
     const url = this.getURL(data);
-    const headers = this.getHeaders();
-    this._http.get(url, {
-        // headers: headers,
-        // withCredentials: true
-    }).subscribe(
-      (resp) => {
-          console.log(resp);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    return this._http.get(url);
   }
 
   getURL(data: HistoricalDataRequestModel): string {
@@ -31,21 +21,7 @@ export class HistoricalDataService {
     url = url.replace('{symbol}', data.symbol);
     url = url.replace('{range}', data.range);
     url = url.replace('{interval}', data.interval);
+    url = this.proxyURL + url;
     return url;
-  }
-
-  getHeaders(): HttpHeaders {
-    let headers = new HttpHeaders();
-    // headers = headers.append('sec-fetch-dest', 'document');
-    // headers = headers.append('sec-fetch-mode', 'navigate');
-    // headers = headers.append('sec-fetch-site', 'none');
-    // headers = headers.append('Accept', '*');
-    // headers = headers.append('Access-Control-Allow-Origin', '*');
-    // headers = headers.append('Access-Control-Allow-Methods', 'HEAD,GET,OPTIONS');
-    // headers = headers.append('Access-Control-Allow-Credentials', 'true');
-    // headers = headers.append('Access-Control-Allow-Origin', '*');
-    // headers = headers.append('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-    // headers = headers.append('content-type', 'application/vnd.sun.wadl+xml');
-    return headers;
   }
 }
