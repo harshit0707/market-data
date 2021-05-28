@@ -4,6 +4,8 @@ import { HistoricalDataRequestModel } from 'src/app/models/HistoricalDataRequest
 import { DownloadDataService } from 'src/app/services/download-data.service';
 import { HistoricalDataService } from 'src/app/services/historical-data.service';
 
+import * as moment from 'moment/moment';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,8 +26,8 @@ export class HomeComponent implements OnInit {
 
   getHistoricalData() {
     const symbol = this.form.get('stockSymbol').value;
-    const range = '7d';
-    const interval = '1m';
+    const range = '1y';
+    const interval = '1d';
     const requestData = new HistoricalDataRequestModel(symbol, range, interval);
     console.log('Get historical data function called');
     this._historicalDataService.getData(requestData).subscribe(
@@ -41,7 +43,13 @@ export class HomeComponent implements OnInit {
 
   downloadData(data: Object) {
     let newObject = {};
-    newObject["timestamp"] = data["chart"]["result"][0]["timestamp"];
+    newObject["date"] = [];
+    newObject["time"] = [];
+    // newObject["timestamp"] = data["chart"]["result"][0]["timestamp"];
+    data["chart"]["result"][0]["timestamp"].forEach(timestamp => {
+      newObject["date"].push(moment(timestamp*1000).format('DD/MM/YYYY'));
+      newObject["time"].push(moment(timestamp*1000).format('hh:mm A'));
+    });
     newObject["close"] = data["chart"]["result"][0]["indicators"]["quote"][0]["close"]
     newObject["high"] = data["chart"]["result"][0]["indicators"]["quote"][0]["high"]
     newObject["low"] = data["chart"]["result"][0]["indicators"]["quote"][0]["low"]

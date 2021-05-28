@@ -8,7 +8,7 @@ export class DownloadDataService {
   constructor() { }
 
   downloadFile(data: Object, filename='data') {
-    let csvData = this.ConvertToCSV(data, ['timestamp', 'close','high', 'low', 'open', 'volume']);
+    let csvData = this.ConvertToCSV(data, ['date', 'time', 'close', 'high', 'low', 'open', 'volume']);
     // console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     let dwldLink = document.createElement("a");
@@ -37,7 +37,7 @@ export class DownloadDataService {
     str += row + '\r\n';
 
     console.log(array);
-    let length = array["timestamp"].length;
+    let length = array["date"].length;
     for (let i = 0; i < length; i++) {
         let line = '';
         for (let index in headerList) {
